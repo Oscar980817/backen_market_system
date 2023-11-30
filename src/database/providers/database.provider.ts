@@ -7,18 +7,25 @@ export const databaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: async () => {
-      const portD: number = parseInt(process.env.API_DATABASE_PORT);
 
       const datasource = new DataSource({
-        type: 'mysql',
-        host: process.env.API_DATABASE_HOST,
-        port: isNaN(portD) ? 3306 : portD,
-        username: process.env.API_DATABASE_USER,
-        password: process.env.API_DATABASE_PASS,
-        database: process.env.API_DATABASE_SCHEMA,
+        type: 'postgres', 
+        host: process.env.POSTGRES_HOST,
+        port: parseInt(process.env.POSTGRES_PORT),
+        username: process.env.POSTGRES_USERNAME,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DATABASE,
         entities: [UserEntity, WorkerEntity, CustomerEntity],
         synchronize: true,
-        ssl: true, // Enable SSL
+        ssl: process.env.POSTGRES_SSL === 'true',
+        extra: {
+          ssl: 
+            process.env.POSTGRES_SSL === 'true'
+            ? {
+              rejectUnauthorized: false,
+            }
+            : null,
+          },
       });
       return datasource.initialize();
     },
