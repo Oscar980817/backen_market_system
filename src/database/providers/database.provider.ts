@@ -18,6 +18,7 @@ export const databaseProviders = [
         database: process.env.API_DATABASE_SCHEMA,
         entities: [UserEntity, WorkerEntity, CustomerEntity],
         synchronize: true,
+        ssl: true, // Enable SSL
       });
       return datasource.initialize();
     },
