@@ -3,7 +3,10 @@ import { DataSource } from 'typeorm';
 
 import { UserEntity } from 'src/ms/entities/users.entity';
 import { WorkerEntity } from 'src/ms/entities/workers.entity';
-
+import { CustomerEntity } from '../entities/customers.entity';
+import { SalesEntity } from '../entities/sales.entity';
+import { ProductsEntity } from '../entities/products.entity';
+import { InventoryEntitie } from '../entities/inventory.entity';
 // Definimos y exportamos una constante llamada Providers. Esta constante es un array de objetos, donde cada objeto es un proveedor.
 export const Providers = [
   {
@@ -26,6 +29,30 @@ export const Providers = [
       connection.getRepository(WorkerEntity),
 
     // La propiedad inject es un array de tokens que representan las dependencias que se deben inyectar en la función useFactory. En este caso, estamos inyectando la conexión a la base de datos.
+    inject: ['DATABASE_CONNECTION'],
+  },
+  {
+    provide: 'CUSTOMERS_REPOSITORY',
+    useFactory: (connection: DataSource) =>
+      connection.getRepository(CustomerEntity),
+    inject: ['DATABASE_CONNECTION'],
+  },
+  {
+    provide: 'SALES_REPOSITORY',
+    useFactory: (connection: DataSource) =>
+      connection.getRepository(SalesEntity),
+    inject: ['DATABASE_CONNECTION'],
+  },
+  {
+    provide: 'PRODUCTS_REPOSITORY',
+    useFactory: (connection: DataSource) =>
+      connection.getRepository(ProductsEntity),
+    inject: ['DATABASE_CONNECTION'],
+  },
+  {
+    provide: 'INVENTORY_REPOSITORY',
+    useFactory: (connection: DataSource) =>
+      connection.getRepository(InventoryEntitie),
     inject: ['DATABASE_CONNECTION'],
   },
 ];

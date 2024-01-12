@@ -2,6 +2,9 @@ import { DataSource } from 'typeorm';
 import { UserEntity } from 'src/ms/entities/users.entity';
 import { WorkerEntity } from 'src/ms/entities/workers.entity';
 import { CustomerEntity } from 'src/ms/entities/customers.entity';
+import { InventoryEntitie } from 'src/ms/entities/inventory.entity';
+import { ProductsEntity } from 'src/ms/entities/products.entity';
+import { SalesEntity } from 'src/ms/entities/sales.entity';
 
 export const databaseProviders = [
   {
@@ -15,7 +18,7 @@ export const databaseProviders = [
         username: process.env.POSTGRES_USERNAME,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DATABASE,
-        entities: [UserEntity, WorkerEntity, CustomerEntity],
+        entities: [UserEntity, WorkerEntity, CustomerEntity, InventoryEntitie, ProductsEntity, SalesEntity],
         synchronize: true,
         ssl: process.env.POSTGRES_SSL === 'true',
         extra: {
